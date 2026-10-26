@@ -26,6 +26,17 @@ const loginMock = async (req, res) => {
       { expiresIn: '8h' }
     );
 
+    const users = [
+  {
+    id: 1,
+    fullName: "Administrador Principal",
+    email: "admin@pascualbravo.edu.co",
+    password: "123",
+    role: "administrador" // <--- Asegúrate de escribirlo exactamente igual
+  },
+  // ...otros usuarios
+];
+
     return res.json({
       message: 'Autenticación exitosa',
       token,

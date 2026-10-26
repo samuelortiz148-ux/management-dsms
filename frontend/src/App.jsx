@@ -13,6 +13,9 @@ function App() {
     setUser(null);
   };
 
+  // Condición maestra para saber si el usuario tiene acceso a la administración
+  const isAdmin = user && (user.role === 'administrador' || user.email === 'samuel.ortiz@pascualbravo.edu.co');
+
   return (
     <div style={{ fontFamily: 'Arial, sans-serif', backgroundColor: 'var(--bg-light)', minHeight: '100vh' }}>
       <header style={{ padding: '15px 20px', backgroundColor: 'var(--primary-blue)', color: '#fff', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -33,9 +36,13 @@ function App() {
           <button onClick={() => setCurrentTab('issues')} className="btn-primary">
             Reportes y Fallas
           </button>
-          <button onClick={() => setCurrentTab('users')} className="btn-primary">
-            Gestión de Roles (Admin)
-          </button>
+
+          {/* Muestra la pestaña de Admin únicamente al usuario autorizado */}
+          {isAdmin && (
+            <button onClick={() => setCurrentTab('users')} className="btn-primary">
+              Gestión de Roles (Admin)
+            </button>
+          )}
         </nav>
       )}
 
@@ -46,8 +53,12 @@ function App() {
           <Equipments />
         ) : currentTab === 'issues' ? (
           <Issues user={user} />
-        ) : (
+        ) : currentTab === 'users' && isAdmin ? (
+          /* Renderiza la vista de roles solo si es Administrador */
           <UsersAdmin />
+        ) : (
+          /* Redirección de seguridad a equipos */
+          <Equipments />
         )}
       </main>
     </div>
