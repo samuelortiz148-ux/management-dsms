@@ -1,0 +1,62 @@
+:root {
+  --primary-blue: #0056b3;
+  --primary-blue-hover: #004085;
+  --danger-red: #d9534f;
+  --danger-red-hover: #c9302c;
+  --success-green: #28a745;
+  --success-green-hover: #218838;
+  --bg-light: #f8f9fa;
+  --card-bg: #ffffff;
+  --text-dark: #212529;
+  --border-color: #dee2e6;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+}
+
+/* Botones genéricos unificados */
+.btn-primary {
+  background-color: var(--primary-blue) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-blue-hover) !important;
+}
+
+.btn-danger {
+  background-color: var(--danger-red) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-danger:hover {
+  background-color: var(--danger-red-hover) !important;
+}
+
+.btn-success {
+  background-color: var(--success-green) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-success:hover {
+  background-color: var(--success-green-hover) !important;
+}
