@@ -20,13 +20,13 @@ const Login = ({ onLoginSuccess }) => {
 
   // Validación de tipo e integridad antes de guardar en almacenamiento local
   if (token && typeof token === 'string') {
-    localStorage.setItem('token', token);
-  }
+    localStorage.setItem('token', encodeURIComponent(token));
+}
 
-  if (user && typeof user === 'object') {
-    localStorage.setItem('user', JSON.stringify(user));
+if (user && typeof user === 'object') {
+    localStorage.setItem('user', encodeURIComponent(JSON.stringify(user)));
     onLoginSuccess(user);
-  }
+}
 } catch (err) {
   setError(err.response?.data?.error || 'Error al iniciar sesión');
 }
