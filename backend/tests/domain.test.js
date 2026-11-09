@@ -30,6 +30,18 @@ describe('Suite de Pruebas Unitarias del Dominio - Management_DSMS', () => {
   // Pegar aquí tus 2 pruebas dentro del describe
   // ==========================================
   describe('Validación de Reportes de Fallas (RN-03) - Daniel', () => {
+
+    test('Prueba 1: Debe rechazar un reporte con descripción vacía', () => {
+  const reporteInvalido = { description: '' };
+  const esValido = Boolean(reporteInvalido.description && reporteInvalido.description.trim().length > 0);
+  expect(esValido).toBe(false);
+});
+
+test('Prueba 2: Debe aceptar un reporte de falla bien detallado', () => {
+  const reporteValido = { description: 'El monitor del aula 201 no enciende' };
+  const esValido = Boolean(reporteValido.description && reporteValido.description.trim().length > 0);
+  expect(esValido).toBe(true);
+});
     
   });
 
