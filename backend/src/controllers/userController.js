@@ -18,7 +18,7 @@ const updateUserRole = async (req, res) => {
       return res.status(400).json({ error: 'Rol no válido.' });
     }
 
-    const user = usersList.find(u => u.id === parseInt(userId));
+    const user = usersList.find(u => u.id === Number.parseInt(userId, 10));
     if (!user) {
       return res.status(404).json({ error: 'Usuario no encontrado.' });
     }
