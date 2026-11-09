@@ -17,21 +17,30 @@ export const loginApi = (data) => API.post('/auth/login', data);
 export const getEquipmentsApi = () => API.get('/equipments');
 export const createEquipmentApi = (data) => API.post('/equipments', data);
 
+// Función auxiliar para prevenir API Traversal e inyección en URLs
+const sanitizeParam = (param) => {
+  if (!param) return '';
+  return encodeURIComponent(String(param).replace(/[^a-zA-Z0-9_-]/g, ''));
+};
+
 // Reporte de Fallas y Mantenimiento (Sprint 2)
 export const createIssueApi = (data) => API.post('/issues', data); // SCRUM-30 / SCRUM-15
 export const getIssuesApi = (params) => API.get('/issues', { params }); // SCRUM-14 / SCRUM-18 / SCRUM-31
+
 export const assignIssueApi = (issueId, data) => {
-  const safeId = encodeURIComponent(String(issueId).trim());
+  const safeId = sanitizeParam(issueId);
   return API.patch(`/issues/${safeId}/assign`, data);
 }; // SCRUM-16
+
 export const updateIssueStatusApi = (issueId, data) => {
-  const safeId = encodeURIComponent(String(issueId).trim());
+  const safeId = sanitizeParam(issueId);
   return API.patch(`/issues/${safeId}/status`, data);
 }; // SCRUM-19
 
 export default API;
 export const getUsersApi = () => API.get('/users');
+
 export const updateUserRoleApi = (userId, newRole) => {
-  const safeId = encodeURIComponent(String(userId).trim());
+  const safeId = sanitizeParam(userId);
   return API.patch(`/users/${safeId}/role`, { newRole });
 };
