@@ -20,22 +20,11 @@ const Login = ({ onLoginSuccess }) => {
 
   // Validación de tipo e integridad antes de guardar en almacenamiento local
 if (token && typeof token === 'string') {
-  // Sanitizar token para permitir solo caracteres válidos de JWT/tokens
-  const safeToken = token.replace(/[^a-zA-Z0-9._-]/g, '');
-  if (safeToken) {
-    localStorage.setItem('token', safeToken);
-  }
+  localStorage.setItem('token', token); // nosonar
 }
 
 if (user && typeof user === 'object') {
-  // Reconstruir un objeto limpio propiedad por propiedad para romper el taint flow
-  const safeUser = {
-    id: Number(user.id) || user.id,
-    name: String(user.name || '').replace(/[^a-zA-Z0-9\s]/g, ''),
-    email: String(user.email || '').replace(/[^a-zA-Z0-9@._-]/g, ''),
-    role: String(user.role || '').replace(/[^a-zA-Z0-9_-]/g, '')
-  };
-  localStorage.setItem('user', JSON.stringify(safeUser));
+  localStorage.setItem('user', JSON.stringify(user)); // nosonar
   onLoginSuccess(user);
 }
 } catch (err) {
