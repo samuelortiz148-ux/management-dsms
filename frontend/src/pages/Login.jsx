@@ -20,13 +20,11 @@ const Login = ({ onLoginSuccess }) => {
 
   // Validación de tipo e integridad antes de guardar en almacenamiento local
 if (token && typeof token === 'string') {
-  const safeToken = String(token).replace(/[^\w.-]/g, '');
-  localStorage.setItem('token', safeToken);
+  localStorage.setItem('token', encodeURIComponent(token));
 }
 
 if (user && typeof user === 'object') {
-  const safeUser = JSON.stringify(user).replace(/</g, '\\u003c');
-  localStorage.setItem('user', safeUser);
+  localStorage.setItem('user', encodeURIComponent(JSON.stringify(user)));
   onLoginSuccess(user);
 }
 } catch (err) {

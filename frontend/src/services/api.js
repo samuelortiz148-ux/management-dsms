@@ -5,15 +5,13 @@ const API = axios.create({
 });
 
 API.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
-  if (token) {
+  const rawToken = localStorage.getItem('token');
+  if (rawToken) {
+    const token = decodeURIComponent(rawToken);
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
 });
-
-// Helper para limpiar parámetros de URL y complacer a SonarQube
-const cleanPath = (id) => encodeURI(String(id).replace(/[^a-zA-Z0-9_-]/g, ''));
 
 // Autenticación y Equipos (Sprint 1)
 export const loginApi = (data) => API.post('/auth/login', data);
@@ -24,21 +22,15 @@ export const createEquipmentApi = (data) => API.post('/equipments', data);
 export const createIssueApi = (data) => API.post('/issues', data);
 export const getIssuesApi = (params) => API.get('/issues', { params });
 
-export const assignIssueApi = (issueId, data) => {
-  const safeId = cleanPath(issueId);
-  return API.patch(`/issues/${safeId}/assign`, data);
-};
+export const assignIssueApi = (issueId, data) => 
+  API.patch(`/issues/${encodeURIComponent(String(issueId))}/assign`, data);
 
-export const updateIssueStatusApi = (issueId, data) => {
-  const safeId = cleanPath(issueId);
-  return API.patch(`/issues/${safeId}/status`, data);
-};
+export const updateIssueStatusApi = (issueId, data) => 
+  API.patch(`/issues/${encodeURIComponent(String(issueId))}/status`, data);
 
 export const getUsersApi = () => API.get('/users');
 
-export const updateUserRoleApi = (userId, newRole) => {
-  const safeId = cleanPath(userId);
-  return API.patch(`/users/${safeId}/role`, { newRole });
-};
+export const updateUserRoleApi = (userId, newRole) => 
+  API.patch(`/users/${encodeURIComponent(String(userId))}/role`, { newRole });
 
 export default API;
