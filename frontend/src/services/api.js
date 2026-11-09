@@ -5,13 +5,21 @@ const API = axios.create({
 });
 
 API.interceptors.request.use((config) => {
-  const rawToken = localStorage.getItem('token');
-  if (rawToken) {
-    const token = decodeURIComponent(rawToken);
+  const token = localStorage.getItem('token');
+  if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
 });
+
+// Helper de sanitización estricta por ID
+const sanitizeId = (id) => {
+  const num = Number(id);
+  if (!Number.isNaN(num) && num > 0) {
+    return num;
+  }
+  return String(id).replace(/[^a-zA-Z0-9_-]/g, '');
+};
 
 // Autenticación y Equipos (Sprint 1)
 export const loginApi = (data) => API.post('/auth/login', data);
@@ -22,15 +30,21 @@ export const createEquipmentApi = (data) => API.post('/equipments', data);
 export const createIssueApi = (data) => API.post('/issues', data);
 export const getIssuesApi = (params) => API.get('/issues', { params });
 
-export const assignIssueApi = (issueId, data) => 
-  API.patch(`/issues/${encodeURIComponent(String(issueId))}/assign`, data);
+export const assignIssueApi = (issueId, data) => {
+  const safeId = sanitizeId(issueId);
+  return API.patch(`/issues/${safeId}/assign`, data);
+};
 
-export const updateIssueStatusApi = (issueId, data) => 
-  API.patch(`/issues/${encodeURIComponent(String(issueId))}/status`, data);
+export const updateIssueStatusApi = (issueId, data) => {
+  const safeId = sanitizeId(issueId);
+  return API.patch(`/issues/${safeId}/status`, data);
+};
 
 export const getUsersApi = () => API.get('/users');
 
-export const updateUserRoleApi = (userId, newRole) => 
-  API.patch(`/users/${encodeURIComponent(String(userId))}/role`, { newRole });
+export const updateUserRoleApi = (userId, newRole) => {
+  const safeId = sanitizeId(userId);
+  return API.patch(`/users/${safeId}/role`, { newRole });
+};
 
 export default API;
