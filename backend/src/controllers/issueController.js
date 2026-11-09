@@ -12,7 +12,7 @@ const createIssue = async (req, res) => {
 
     const newIssue = {
       id: issuesList.length + 1,
-      equipmentId: parseInt(equipmentId),
+      equipmentId: Number.parseInt(equipmentId, 10),
       reportedBy: req.body.reportedBy || 'usuario@pascualbravo.edu.co',
       description,
       evidenceUrl: evidenceUrl || null, // SCRUM-15: Evidencia adjunta
@@ -59,7 +59,7 @@ const assignIssue = async (req, res) => {
     const { issueId } = req.params;
     const { priority, assignedTechnician, estimatedDate } = req.body;
 
-    const issue = issuesList.find(i => i.id === parseInt(issueId));
+    const issue = issuesList.find(i => i.id === Number.parseInt(issueId, 10));
     if (!issue) return res.status(404).json({ error: 'Reporte no encontrado.' });
 
     if (priority) issue.priority = priority;
@@ -79,7 +79,7 @@ const updateIssueStatus = async (req, res) => {
     const { issueId } = req.params;
     const { status } = req.body;
 
-    const issue = issuesList.find(i => i.id === parseInt(issueId));
+    const issue = issuesList.find(i => i.id === Number.parseInt(issueId, 10));
     if (!issue) return res.status(404).json({ error: 'Reporte no encontrado.' });
 
     if (status) issue.status = status;

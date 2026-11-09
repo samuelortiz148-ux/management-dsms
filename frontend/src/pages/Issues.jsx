@@ -36,7 +36,7 @@ const Issues = ({ user }) => {
   };
 
   useEffect(() => {
-    fetchData();
+    void fetchData();
   }, [user]);
 
   // Manejar el reporte de falla (SCRUM-30)
@@ -49,7 +49,7 @@ const Issues = ({ user }) => {
       });
       setMessage('Reporte enviado con éxito.');
       setFormData({ equipmentId: '', description: '', evidenceUrl: '' });
-      fetchData();
+      await fetchData();
     } catch (err) {
       setMessage(err.response?.data?.error || 'Error al enviar reporte');
     }
@@ -64,7 +64,7 @@ const Issues = ({ user }) => {
     if (priority && assignedTechnician) {
       try {
         await assignIssueApi(issueId, { priority, assignedTechnician, estimatedDate });
-        fetchData();
+        await fetchData();
       } catch (err) {
         alert('Error al asignar caso');
       }
@@ -75,7 +75,7 @@ const Issues = ({ user }) => {
   const handleStatusChange = async (issueId, newStatus) => {
     try {
       await updateIssueStatusApi(issueId, { status: newStatus });
-      fetchData();
+      await fetchData();
     } catch (err) {
       alert('Error al actualizar estado');
     }
@@ -88,21 +88,43 @@ const Issues = ({ user }) => {
         <div style={{ marginBottom: '30px', background: '#fff', padding: '15px', borderRadius: '8px', border: '1px solid #ccc' }}>
          <h2 style={{ color: '#222' }}><AlertTriangle style={{ verticalAlign: 'middle', marginRight: '8px' }} /> Reportar Falla de Equipo (HU-21)</h2>
           {message && <p style={{ fontWeight: 'bold' }}>{message}</p>}
-          <form onSubmit={handleSubmitReport} style={{ display: 'grid', gap: '10px', maxWidth: '500px' }}>
-            <label>Seleccionar Equipo:</label>
-            <select
-              value={formData.equipmentId}
-              onChange={(e) => setFormData({ ...formData, equipmentId: e.target.value })}
-              required
-              style={{ padding: '8px' }}
-            >
-              <option value="">-- Seleccione un equipo --</option>
-              {equipments.map((eq) => (
-                <option key={eq.id} value={eq.id}>
-                  {eq.name} ({eq.serialNumber}) - {eq.location}
-                </option>
-              ))}
-            </select>
+<form onSubmit={handleSubmitReport} style={{ display: 'grid', gap: '10px', maxWidth: '500px' }}>
+  <label htmlFor="equipmentId">Seleccionar Equipo:</label>
+  <select
+    id="equipmentId"
+    value={formData.equipmentId}
+    onChange={(e) => setFormData({ ...formData, equipmentId: e.target.value })}
+    required
+    style={{ padding: '8px' }}
+  >
+    <option value="">-- Seleccionar --</option>
+    {equipments.map((eq) => (
+      <option key={eq.id} value={eq.id}>
+        {eq.name} ({eq.serialNumber}) - {eq.location}
+      </option>
+    ))}
+  </select>
+
+  <label htmlFor="description">Descripción detallada del fallo:</label>
+  <textarea
+    id="description"
+    rows="3"
+    value={formData.description}
+    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+    placeholder="Describa el problema presentado por el equipo..."
+    required
+    style={{ padding: '8px' }}
+  />
+
+  <label htmlFor="evidenceUrl">URL de Evidencia / Foto adjunta (HU-14):</label>
+  <input
+    id="evidenceUrl"
+    type="text"
+    value={formData.evidenceUrl}
+    onChange={(e) => setFormData({ ...formData, evidenceUrl: e.target.value })}
+    placeholder="https://ejemplo.com/foto.jpg"
+    style={{ padding: '8px' }}
+  />
 
             <label>Descripción detallada del fallo:</label>
             <textarea

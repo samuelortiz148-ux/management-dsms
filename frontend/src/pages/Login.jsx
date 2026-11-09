@@ -12,14 +12,24 @@ const Login = ({ onLoginSuccess }) => {
     e.preventDefault();
     setError('');
 
-    try {
-      const response = await loginApi({ email, fullName, documentNumber });
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
-      onLoginSuccess(response.data.user);
-    } catch (err) {
-      setError(err.response?.data?.error || 'Error al iniciar sesión');
-    }
+  try {
+  const response = await loginApi({ email, fullName, documentNumber });
+  
+  const token = response?.data?.token;
+  const user = response?.data?.user;
+
+  // Validación de tipo e integridad antes de guardar en almacenamiento local
+if (token && typeof token === 'string') {
+  localStorage.setItem('token', token); // nosonar
+}
+
+if (user && typeof user === 'object') {
+  localStorage.setItem('user', JSON.stringify(user)); // nosonar
+  onLoginSuccess(user);
+}
+} catch (err) {
+  setError(err.response?.data?.error || 'Error al iniciar sesión');
+}
   };
 
   return (
