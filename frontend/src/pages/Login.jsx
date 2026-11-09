@@ -19,13 +19,15 @@ const Login = ({ onLoginSuccess }) => {
   const user = response?.data?.user;
 
   // Validación de tipo e integridad antes de guardar en almacenamiento local
-  if (token && typeof token === 'string') {
-    localStorage.setItem('token', encodeURIComponent(token));
+if (token && typeof token === 'string') {
+  const safeToken = String(token).replace(/[^\w.-]/g, '');
+  localStorage.setItem('token', safeToken);
 }
 
 if (user && typeof user === 'object') {
-    localStorage.setItem('user', encodeURIComponent(JSON.stringify(user)));
-    onLoginSuccess(user);
+  const safeUser = JSON.stringify(user).replace(/</g, '\\u003c');
+  localStorage.setItem('user', safeUser);
+  onLoginSuccess(user);
 }
 } catch (err) {
   setError(err.response?.data?.error || 'Error al iniciar sesión');
