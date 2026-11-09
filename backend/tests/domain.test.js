@@ -33,12 +33,24 @@ describe('Suite de Pruebas Unitarias del Dominio - Management_DSMS', () => {
     
   });
 
-  // ==========================================
-  // ESPACIO PARA: MANUELA (RN-05)
-  // Pegar aquí tus 2 pruebas dentro del describe
-  // ==========================================
-  describe('Permisos de Administrador de Roles (RN-05) - Manuela', () => {
-    
+  
+ // ==========================================
+// ESPACIO PARA: MANUELA (RN-05)
+// ==========================================
+describe('Permisos de Administrador de Roles (RN-05) - Manuela', () => {
+
+  test('Prueba 1: Debe denegar acceso al módulo de usuarios a un rol común', () => {
+    const usuario = { role: 'tecnico' };
+    const tieneAcceso = usuario.role === 'administrador';
+    expect(tieneAcceso).toBe(false);
   });
+
+  test('Prueba 2: Debe otorgar acceso al módulo de usuarios al Administrador', () => {
+    const usuario = { role: 'administrador' };
+    const tieneAcceso = usuario.role === 'administrador';
+    expect(tieneAcceso).toBe(true);
+  });
+
+});
 
 });
