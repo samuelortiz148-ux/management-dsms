@@ -17,8 +17,8 @@ const Equipments = () => {
   };
 
   useEffect(() => {
-    fetchEquipments();
-  }, []);
+  void fetchEquipments();
+}, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,7 +26,7 @@ const Equipments = () => {
       await createEquipmentApi(formData);
       setMessage('Equipo registrado exitosamente');
       setFormData({ serialNumber: '', name: '', brand: '', model: '', location: '' });
-      fetchEquipments();
+      await fetchEquipments();
     } catch (err) {
       setMessage(err.response?.data?.error || 'Error al registrar equipo');
     }
