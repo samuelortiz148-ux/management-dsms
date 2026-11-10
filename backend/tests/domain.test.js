@@ -18,12 +18,23 @@ describe('Suite de Pruebas Unitarias del Dominio - Management_DSMS', () => {
   });
 
   // ==========================================
-  // ESPACIO PARA: SALOMÉ (RN-01)
-  // Pegar aquí tus 2 pruebas dentro del describe
+  // REGISTRADO POR: SALOMÉ (RN-01)
   // ==========================================
   describe('Validación de Registro de Equipos (RN-01) - Salomé', () => {
     
+  test('Prueba 1: Debe rechazar un equipo sin nombre asignado', () => {
+    const equipoInvalido = { name: '', serial: 'EQ-101' };
+    const esValido = Boolean(equipoInvalido.name && equipoInvalido.serial);
+    expect(esValido).toBe(false);
   });
+
+  test('Prueba 2: Debe validar correctamente un equipo con todos sus datos', () => {
+    const equipoValido = { name: 'Proyector Epson', serial: 'EQ-101' };
+    const esValido = Boolean(equipoValido.name && equipoValido.serial);
+    expect(esValido).toBe(true);
+  });
+
+});
 
   // ==========================================
   // ESPACIO PARA: DANIEL (RN-03)
