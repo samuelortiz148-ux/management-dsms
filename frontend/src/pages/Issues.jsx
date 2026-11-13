@@ -141,7 +141,7 @@ const Issues = ({ user }) => {
 <input
   id="issue-evidence-url"
   type="text"
-  placeholder="http://ejemplo.com/evidencia.png"
+  placeholder="https://ejemplo.com/evidencia.png"
   value={formData.evidenceUrl}
   onChange={(e) => setFormData({ ...formData, evidenceUrl: e.target.value })}
   style={{ padding: '8px' }}
