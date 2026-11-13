@@ -126,24 +126,26 @@ const Issues = ({ user }) => {
     style={{ padding: '8px' }}
   />
 
-            <label>Descripción detallada del fallo:</label>
-            <textarea
-              rows="3"
-              value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              placeholder="Describa el problema presentado por el equipo..."
-              required
-              style={{ padding: '8px' }}
-            />
+           <label htmlFor="issue-description">Descripción detallada del fallo:</label>
+<textarea
+  id="issue-description"
+  rows="3"
+  value={formData.description}
+  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+  placeholder="Describa el problema presentado por el equipo..."
+  required
+  style={{ padding: '8px' }}
+/>
 
-            <label>URL de Evidencia / Foto adjunta (HU-14):</label>
-            <input
-              type="text"
-              placeholder="http://ejemplo.com/evidencia.png"
-              value={formData.evidenceUrl}
-              onChange={(e) => setFormData({ ...formData, evidenceUrl: e.target.value })}
-              style={{ padding: '8px' }}
-            />
+<label htmlFor="issue-evidence-url">URL de Evidencia / Foto adjunta (HU-14):</label>
+<input
+  id="issue-evidence-url"
+  type="text"
+  placeholder="http://ejemplo.com/evidencia.png"
+  value={formData.evidenceUrl}
+  onChange={(e) => setFormData({ ...formData, evidenceUrl: e.target.value })}
+  style={{ padding: '8px' }}
+/>
 
             <button type="submit" style={{ padding: '10px', backgroundColor: '#d9534f', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
               Enviar Reporte

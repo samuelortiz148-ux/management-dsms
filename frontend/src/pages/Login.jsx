@@ -12,24 +12,24 @@ const Login = ({ onLoginSuccess }) => {
     e.preventDefault();
     setError('');
 
-  try {
-  const response = await loginApi({ email, fullName, documentNumber });
-  
-  const token = response?.data?.token;
-  const user = response?.data?.user;
+    try {
+      const response = await loginApi({ email, fullName, documentNumber });
 
-  // Validación de tipo e integridad antes de guardar en almacenamiento local
-if (token && typeof token === 'string') {
-  localStorage.setItem('token', token); // nosonar
-}
+      const token = response?.data?.token;
+      const user = response?.data?.user;
 
-if (user && typeof user === 'object') {
-  localStorage.setItem('user', JSON.stringify(user)); // nosonar
-  onLoginSuccess(user);
-}
-} catch (err) {
-  setError(err.response?.data?.error || 'Error al iniciar sesión');
-}
+      // Validación de tipo e integridad antes de guardar en almacenamiento local
+      if (token && typeof token === 'string') {
+        localStorage.setItem('token', token); // nosonar
+      }
+
+      if (user && typeof user === 'object') {
+        localStorage.setItem('user', JSON.stringify(user)); // nosonar
+        onLoginSuccess(user);
+      }
+    } catch (err) {
+      setError(err.response?.data?.error || 'Error al iniciar sesión');
+    }
   };
 
   return (
@@ -38,8 +38,9 @@ if (user && typeof user === 'object') {
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: '10px' }}>
-          <label>Correo Institucional:</label>
+          <label htmlFor="login-email">Correo Institucional:</label>
           <input
+            id="login-email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -49,8 +50,9 @@ if (user && typeof user === 'object') {
           />
         </div>
         <div style={{ marginBottom: '10px' }}>
-          <label>Nombre Completo:</label>
+          <label htmlFor="login-fullname">Nombre Completo:</label>
           <input
+            id="login-fullname"
             type="text"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
@@ -60,8 +62,9 @@ if (user && typeof user === 'object') {
           />
         </div>
         <div style={{ marginBottom: '15px' }}>
-          <label>Número de Documento:</label>
+          <label htmlFor="login-document">Número de Documento:</label>
           <input
+            id="login-document"
             type="text"
             value={documentNumber}
             onChange={(e) => setDocumentNumber(e.target.value)}

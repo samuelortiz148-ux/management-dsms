@@ -16,14 +16,14 @@ const UsersAdmin = () => {
   };
 
   useEffect(() => {
-    fetchUsers();
+    void fetchUsers();
   }, []);
 
   const handleRoleChange = async (userId, newRole) => {
     try {
       await updateUserRoleApi(userId, newRole);
       setMsg('Rol actualizado con éxito.');
-      fetchUsers();
+      await fetchUsers();
     } catch (err) {
       setMsg('Error al actualizar el rol.');
     }
